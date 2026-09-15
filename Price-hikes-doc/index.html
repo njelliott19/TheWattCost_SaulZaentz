@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Watt Cost — A Documentary in Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171c;
+    --ink-soft:#1b1f26;
+    --line:#2c323b;
+    --grid-blue:#5b7086;
+    --paper:#ece8e0;
+    --paper-dim:#a9a49a;
+    --lamp:#e0a44f;
+    --lamp-dim:#8a6a3a;
+    --max:1200px;
+    --serif: 'IBM Plex Serif', Georgia, serif;
+    --sans: 'IBM Plex Sans', Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--lamp);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--lamp); outline-offset:3px;}
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:120px 0 100px;
+    overflow:hidden;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .kicker{
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--grid-blue);
+    letter-spacing:0.02em;
+    margin:0 0 22px;
+  }
+  h1.title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(42px, 7vw, 76px);
+    line-height:1.02;
+    margin:0 0 28px;
+    max-width:14ch;
+    color:var(--paper);
+  }
+  .logline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:clamp(19px, 2.4vw, 23px);
+    line-height:1.5;
+    max-width:52ch;
+    color:#cfcabf;
+    margin:0 0 34px;
+  }
+  .status-line{
+    font-size:14px;
+    color:var(--paper-dim);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .status-dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--lamp);
+    box-shadow:0 0 0 3px rgba(224,164,79,0.18);
+  }
+
+  /* ---------- Section rhythm ---------- */
+  section{padding:88px 0;}
+  h2.h{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(28px, 3.4vw, 38px);
+    margin:0 0 28px;
+    max-width:20ch;
+  }
+  .lede{
+    font-size:19px;
+    line-height:1.7;
+    max-width:66ch;
+    color:#d8d4cb;
+  }
+  .lede + .lede{margin-top:18px;}
+
+  /* ---------- Three acts ---------- */
+  .acts{
+    margin-top:64px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    position:relative;
+  }
+  .act{position:relative; padding:0 26px 0 0;}
+  .act:last-child{padding-right:0;}
+  .act h3{
+    font-family:var(--serif);
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 12px;
+  }
+  .act p{
+    font-size:15.5px;
+    color:var(--paper-dim);
+    line-height:1.65;
+    margin:0;
+  }
+  .act .loc{
+    display:block;
+    font-size:13px;
+    color:var(--grid-blue);
+    margin-bottom:8px;
+  }
+
+  @media (max-width:760px){
+    .acts{grid-template-columns:1fr; gap:40px;}
+    .act{padding-right:0;}
+  }
+
+  /* ---------- Field quotes ---------- */
+  .quotes{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:48px 56px;
+  }
+  .quote-card:nth-child(3){
+    grid-column:1 / -1;
+    max-width:640px;
+  }
+  @media (max-width:760px){
+    .quotes{grid-template-columns:1fr;}
+    .quote-card:nth-child(3){max-width:none;}
+  }
+
+  .quote-card{ }
+  .still{
+    aspect-ratio:4/3;
+    border:1px solid var(--line);
+    border-radius:2px;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, var(--ink-soft) 0 2px, transparent 2px 14px);
+    margin-bottom:22px;
+  }
+  .still img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:block;
+  }
+  .still-label{
+    font-size:12.5px;
+    color:var(--paper-dim);
+    margin:-14px 0 20px;
+  }
+  blockquote{
+    margin:0 0 14px;
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:19px;
+    line-height:1.55;
+    color:#ddd8cd;
+    padding-left:18px;
+    border-left:2px solid var(--lamp-dim);
+  }
+  .attribution{
+    font-size:14px;
+    color:var(--paper-dim);
+  }
+  .attribution strong{color:var(--paper); font-weight:500;}
+
+  /* ---------- Numbers (footnote style) ---------- */
+  .figures{margin-top:56px;}
+  .figure-row{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:28px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+  }
+  .figure-row:last-child{border-bottom:1px solid var(--line);}
+  .figure-num{
+    font-family:var(--serif);
+    font-size:34px;
+    font-weight:600;
+    color:var(--paper);
+    line-height:1.1;
+  }
+  .figure-body p{margin:0 0 8px; font-size:15.5px; color:#d8d4cb; max-width:56ch;}
+  .figure-src{font-size:12.5px; color:var(--grid-blue);}
+  .fn-link{
+    color:var(--lamp);
+    text-decoration:none;
+    font-size:12px;
+    vertical-align:super;
+    margin-left:2px;
+  }
+  .fn-link:hover{text-decoration:underline;}
+  @media (max-width:640px){
+    .figure-row{grid-template-columns:1fr; gap:8px;}
+  }
+
+  /* ---------- About ---------- */
+  .about{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:56px;
+    margin-top:12px;
+  }
+  @media (max-width:760px){ .about{grid-template-columns:1fr;} }
+  .meta-list{font-size:14.5px;}
+  .meta-list dt{color:var(--paper-dim); margin-top:18px;}
+  .meta-list dt:first-child{margin-top:0;}
+  .meta-list dd{margin:4px 0 0; color:var(--paper);}
+
+  /* ---------- Footer / Sources ---------- */
+  footer{padding:56px 0 72px;}
+  .footer-row{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;
+  }
+  .footer-title{font-family:var(--serif); font-size:20px; font-weight:600;}
+  .footer-links{display:flex; gap:24px; font-size:14.5px;}
+  .footer-note{font-size:13px; color:var(--paper-dim); margin-top:36px;}
+  .sources-list{
+    list-style:none;
+    margin:28px 0 0;
+    padding:0;
+    font-size:14px;
+    color:var(--paper-dim);
+  }
+  .sources-list li{
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    display:flex;
+    gap:12px;
+  }
+  .sources-list li:last-child{border-bottom:1px solid var(--line);}
+  .src-num{color:var(--grid-blue); flex-shrink:0;}
+  .sources-list a{color:var(--paper); text-decoration:none;}
+  .sources-list a:hover{color:var(--lamp);}
+  .back-link{margin-left:6px; font-size:12px; color:var(--grid-blue); text-decoration:none;}
+
+  ::selection{background:var(--lamp); color:#1b1f26;}
+
+  /* ---------- Nav ---------- */
+  nav.site-nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(20,23,28,0.92);
+    backdrop-filter:blur(6px);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .nav-mark{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:16px;
+    color:var(--paper);
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .nav-links{
+    display:flex; gap:26px; flex-wrap:wrap;
+  }
+  .nav-links a{
+    color:var(--paper-dim);
+    text-decoration:none;
+    font-size:14.5px;
+  }
+  .nav-links a:hover{color:var(--paper);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap nav-row">
+    <a class="nav-mark" href="#top">The Watt Cost</a>
+    <div class="nav-links">
+      <a href="#premise">Premise</a>
+      <a href="#acts">Three rooms</a>
+      <a href="#field">From the field</a>
+      <a href="#numbers">Why now</a>
+      <a href="#about">About</a>
+      <a href="mailto:nj.elliott19@gmail.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <h1 class="title">The Watt Cost</h1>
+    <p class="logline">Electricity prices are rising nationwide as AI data centers compete for grid capacity. Low-income households, who already spend nearly three times more of their income on energy than everyone else, are taking a big hit.</p>
+  </div>
+</header>
+
+<section id="premise">
+  <div class="wrap">
+    <h2 class="h">The premise</h2>
+    <p class="lede">A small number of households in Baltimore and DC neighborhoods carry this film. Families for whom a rising electric bill isn't an inconvenience but a genuine financial cliff. Their kitchens and their bills are where the story starts.</p>
+    <p class="lede">From there, it follows two threads outward, both converging on Washington: where the demand driving prices up is actually coming from, and why the safety net meant to catch these households is itself under strain. The region makes this possible and is home to some of the country's highest-burden low-income households, minutes from the data center corridor driving the price spike, and the seat of the federal decisions shaping the outcome.</p>
+  </div>
+</section>
+
+<section id="acts">
+  <div class="wrap">
+    <h2 class="h">Three rooms, one story</h2>
+    <div class="acts">
+      <div class="act">
+        <span class="loc">Baltimore &amp; DC</span>
+        <h3>The kitchen table</h3>
+        <p>Real households, bills, trade-offs. A shutoff notice, a choice between electricity and rent. The emotional center of the film.</p>
+      </div>
+      <div class="act">
+        <span class="loc">Northern Virginia</span>
+        <h3>The data center</h3>
+        <p>Stark, windowless, enormous. The physical infrastructure driving demand, filmed for scale.</p>
+      </div>
+      <div class="act">
+        <span class="loc">Washington, DC</span>
+        <h3>The hearing room</h3>
+        <p>FERC dockets, congressional appropriations fights. The place where the decisions get made, often too slowly for the people waiting on them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="field">
+  <div class="wrap">
+    <h2 class="h">From the field</h2>
+    <p class="lede">Three interviews conducted so far.</p>
+    <div class="quotes">
+      <div class="quote-card">
+        <div class="still">
+          <img src="images/Charles.png" alt="Video still from the Dorsey interview">
+        </div>
+        <blockquote>&ldquo;The essential things in life are a roof over your head, gas, electric. It's something you can't do without.&rdquo;</blockquote>
+        <p class="attribution"><strong>Charles Dorsey Jr.</strong> — Bel Air-Edison resident, Baltimore</p>
+      </div>
+      <div class="quote-card">
+        <div class="still">
+          <img src="images/Laurel.png" alt="Video still from the Peltier interview">
+        </div>
+        <blockquote>&ldquo;The whole system was not designed for these data centers. Now everyone's scrambling to figure out how you build it and who pays for it.&rdquo;</blockquote>
+        <p class="attribution"><strong>Laurel Peltier</strong> — Chair, Maryland Energy Advocates Coalition</p>
+      </div>
+      <div class="quote-card">
+        <div class="still">
+          <img src="images/Sofia.png" alt="Video still from the Gilroy interview">
+        </div>
+        <blockquote>&ldquo;For 167,000 Marylanders, 25% of their income goes to their utility bill.&rdquo;</blockquote>
+        <p class="attribution"><strong>Sofia Gilroy</strong> — Policy Associate, Maryland PIRG</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="numbers">
+  <div class="wrap">
+    <h2 class="h">Why now</h2>
+    <div class="figures">
+      <div class="figure-row">
+        <div class="figure-num">28.8%</div>
+        <div class="figure-body">
+          <p id="fnref-1">Rise in the average U.S. residential electricity bill from 2021 to 2025, with prices projected to keep climbing as data center demand strains the grid.<a href="#src-1" class="fn-link">[1]</a></p>
+        </div>
+      </div>
+      <div class="figure-row">
+        <div class="figure-num">7.2%</div>
+        <div class="figure-body">
+          <p id="fnref-2">Share of income the average low-income household spends on energy which is roughly three times the share spent by the typical U.S. household.<a href="#src-2" class="fn-link">[2]</a></p>
+        </div>
+      </div>
+      <div class="figure-row">
+        <div class="figure-num">40%</div>
+        <div class="figure-body">
+          <p id="fnref-3">Approximate share of a recent PJM capacity auction's total cost attributed to data center demand which is an auction that cleared at the regulatory price cap and still fell short of the grid's reliability target.<a href="#src-3" class="fn-link">[3]</a></p>
+        </div>
+      </div>
+      <div class="figure-row">
+        <div class="figure-num">$4.05B</div>
+        <div class="figure-body">
+          <p id="fnref-4">LIHEAP funding preserved by Congress after a 2025 proposal to eliminate the program entirely. That funding is threatened again in the FY2027 budget.<a href="#src-4" class="fn-link">[4]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <h2 class="h">About the filmmaker</h2>
+    <div class="about">
+      <div>
+        <p class="lede">I'm a video journalist at the Baltimore Fishbowl, an award-winning daily local news website, where I produce horizontal and vertical pieces. I recently produced a documentary on science funding cuts with the Emmy-winning documentary newsroom, Evident Media. I have a passion for video journalism and documentary filmmaking, focusing on people-centered stories and injustices. I'm a graduate of journalism from the University of Maryland, College Park.</p>
+      </div>
+      <dl class="meta-list">
+        <dt>Based in</dt>
+        <dd>Baltimore–DC region</dd>
+        <dt>Previous work</dt>
+        <dd><a href="https://njelliott19.github.io/personal-website/#work">njelliott19.github.io/personal-website</a></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="footer-title">Sources</div>
+      <div class="footer-links">
+        <a href="mailto:nj.elliott19@gmail.com">Contact</a>
+      </div>
+    </div>
+    <ol class="sources-list">
+      <li id="src-1"><span class="src-num">[1]</span> <span>NEADA, &ldquo;Energy Price Update,&rdquo; Nov. 19, 2025 (EIA data, calculations by NEADA) — <a href="https://neada.org/wp-content/uploads/2025/11/EnergypricesNov25.pdf" target="_blank" rel="noopener">neada.org</a><a href="#fnref-1" class="back-link">&#8617;</a></span></li>
+      <li id="src-2"><span class="src-num">[2]</span> <span>ACEEE / LIHEAP Clearinghouse, energy burden research — <a href="https://liheapch.acf.gov/news/apr16/energyburden.htm" target="_blank" rel="noopener">liheapch.acf.gov</a><a href="#fnref-2" class="back-link">&#8617;</a></span></li>
+      <li id="src-3"><span class="src-num">[3]</span> <span>Utility Dive, &ldquo;Data centers were 40% of PJM capacity costs in last auction: market monitor&rdquo; — <a href="https://www.utilitydive.com/news/data-centers-pjm-capacity-auction/808951/" target="_blank" rel="noopener">utilitydive.com</a><a href="#fnref-3" class="back-link">&#8617;</a></span></li>
+      <li id="src-4"><span class="src-num">[4]</span> <span>Utility Dive, &ldquo;Federal energy assistance programs survive budget gauntlet&rdquo; — <a href="https://www.utilitydive.com/news/federal-energy-assistance-programs-survive-budget-gauntlet/811389/" target="_blank" rel="noopener">utilitydive.com</a>; American Public Power Association, on the FY2027 elimination threat — <a href="https://www.publicpower.org/periodical/article/remaining-fy-2026-liheap-funds-disbursed-states-liheap-again-faces-elimination-fy-2027" target="_blank" rel="noopener">publicpower.org</a><a href="#fnref-4" class="back-link">&#8617;</a></span></li>
+    </ol>
+    <p class="footer-note">All figures above are sourced as of September 2026 </p>
+  </div>
+</footer>
+
+</body>
+</html>
